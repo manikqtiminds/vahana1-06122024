@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar styles */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #93c5fd;
+  border-radius: 1px;
+}
+
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #93c5fd #f1f1f1;
+}
+
+/* Responsive image container */
+@media (max-width: 768px) {
+  .thumbnail-container {
+    flex: 0 0 90px;
+  }
+}
+
+/* Center column image container */
+.center-column-image {
+  max-width: none;
+  max-height: none;
+  cursor: move;
+}
+
+/* Hide scrollbar when not hovering */
+.auto-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.auto-hide-scrollbar:hover::-webkit-scrollbar {
+  display: block;
+}
