@@ -39,15 +39,16 @@ function ReviewEdit() {
     }
   }, [referenceNo, fetchImages]);
 
-  const handleDownloadReport = () => {
-    console.log('Downloading report for:', referenceNo);
+  const handleReportClick = () => {
+    const params = new URLSearchParams(location.search);
+    navigate(`/report?${params.toString()}`);
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Header 
         referenceNo={referenceNo}
-        onDownloadReport={handleDownloadReport}
+        onReportClick={handleReportClick}
       />
       <div className="flex flex-col md:flex-row flex-1 gap-2 md:gap-[0.5%] p-4">
         <div className="w-full md:w-[5%] bg-white rounded-lg shadow-md mb-2 md:mb-0">

@@ -3,6 +3,8 @@ const cors = require('cors');
 const referenceNumbersRoutes = require('./routes/referenceNumbers');
 const imagesRoutes = require('./routes/images');
 const damageAnnotationsRoutes = require('./routes/damageAnnotations');
+const carPartsRoutes = require('./routes/carParts');
+const reportsRoutes = require('./routes/reports');
 require('dotenv').config();
 
 const app = express();
@@ -21,6 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/referenceNumbers', referenceNumbersRoutes);
 app.use('/api/images', imagesRoutes);
 app.use('/api/damageAnnotations', damageAnnotationsRoutes);
+app.use('/api/carParts', carPartsRoutes);
+app.use('/api/reports', reportsRoutes);
+app.use(cors(corsOptions));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -90,7 +90,7 @@ function CenterColumn() {
       </div>
 
       {/* Image Container */}
-      <div className="relative flex-1 bg-gray-100 overflow-hidden">
+      <div className="relative flex-1 bg-gray-100">
         {/* Navigation Buttons */}
         <button
           onClick={handlePrevious}
@@ -108,35 +108,35 @@ function CenterColumn() {
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        {/* Zoomable Image Container */}
-        <div 
-          className={`h-full w-full overflow-auto scrollbar-custom ${!isDrawingMode ? 'cursor-grab active:cursor-grabbing' : ''}`}
-          onMouseDown={!isDrawingMode ? handleMouseDown : undefined}
-          onMouseMove={!isDrawingMode ? handleMouseMove : undefined}
-          onMouseUp={!isDrawingMode ? handleMouseUp : undefined}
-          onMouseLeave={!isDrawingMode ? handleMouseUp : undefined}
-        >
-          <div
-            className="min-h-full min-w-full flex items-center justify-center relative"
-            style={{
-              transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-              transformOrigin: '0 0',
-              transition: isDragging ? 'none' : 'transform 0.1s ease-out'
-            }}
+        {/* Scrollable Container */}
+        <div className="absolute inset-0 overflow-auto scrollbar-custom">
+          {/* Zoomable Content Container */}
+          <div 
+            className={`min-h-full min-w-full flex items-center justify-center ${!isDrawingMode ? 'cursor-grab active:cursor-grabbing' : ''}`}
+            onMouseDown={!isDrawingMode ? handleMouseDown : undefined}
+            onMouseMove={!isDrawingMode ? handleMouseMove : undefined}
+            onMouseUp={!isDrawingMode ? handleMouseUp : undefined}
+            onMouseLeave={!isDrawingMode ? handleMouseUp : undefined}
           >
-            <div className="relative">
+            {/* Transform Container */}
+            <div
+              className="relative"
+              style={{
+                transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+                transformOrigin: '0 0',
+                transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+              }}
+            >
               <ImageFrame image={currentImage} />
+              <DamageEditor 
+                scale={scale} 
+                position={position} 
+                isDrawingMode={isDrawingMode}
+                setIsDrawingMode={setIsDrawingMode}
+              />
             </div>
           </div>
         </div>
-
-        {/* Drawing Editor Layer */}
-        <DamageEditor 
-          scale={scale} 
-          position={position} 
-          isDrawingMode={isDrawingMode}
-          setIsDrawingMode={setIsDrawingMode}
-        />
       </div>
 
       {/* Image Info */}

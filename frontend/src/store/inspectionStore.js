@@ -29,6 +29,8 @@ const useInspectionStore = create((set, get) => ({
       console.log('Received images data:', imagesData);
 
       const formattedImages = imagesData.map((image) => ({
+        ...image,
+        referenceNo, // Add referenceNo to each image
         imageName: image.imageName,
         imageUrl: image.imageUrl,
         dimensions: image.dimensions || { width: 1, height: 1 },

@@ -3,21 +3,36 @@ import { Filter, Plus, Edit2, Trash2 } from 'lucide-react';
 import { DamageTypeIndicator } from './DamageTypeIndicator';
 
 function DamageList({ 
-  annotations, 
-  currentImageCost, 
-  totalCost, 
-  loading, 
-  error,
+  annotations = [], 
+  currentImageCost = 0, 
+  totalCost = 0, 
+  loading = false, 
+  error = null,
   onAddDamage,
   onDelete 
 }) {
   const [filter, setFilter] = useState('All');
 
+  const getDamageType = (type) => {
+    switch (parseInt(type)) {
+      case 0: return 'Scratch';
+      case 1: return 'Dent';
+      case 2: return 'Broken';
+      default: return 'Unknown';
+    }
+  };
+
+  const getRepairType = (type) => {
+    switch (parseInt(type)) {
+      case 0: return 'Repair';
+      case 1: return 'Replace';
+      default: return 'NA';
+    }
+  };
+
   const filteredAnnotations = annotations.filter((annotation) => {
     if (filter === 'All') return true;
-    if (filter === 'Repair') return annotation.repairType === 'Repair';
-    if (filter === 'Replace') return annotation.repairType === 'Replace';
-    return true;
+    return filter === getRepairType(annotation.RepairReplaceID);
   });
 
   if (loading) {
@@ -87,36 +102,36 @@ function DamageList({
                   </td>
                 </tr>
               ) : (
-                filteredAnnotations.map((annotation) => (
-                  <tr key={annotation.id} className="bg-[#f2fff7]">
+                filteredAnnotations.map((annotation, index) => (
+                  <tr key={annotation.MLCaseImageAssessmentId || index} className="bg-[#f2fff7]">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {annotation.partName}
+                      {annotation.CarPartName || 'Unknown Part'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <DamageTypeIndicator type={annotation.damageType} />
+                      <DamageTypeIndicator type={annotation.DamageTypeID} />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`text-sm px-2 py-1 rounded-full font-medium ${
-                        annotation.repairType === 'Repair' 
+                        getRepairType(annotation.RepairReplaceID) === 'Repair' 
                           ? 'bg-[#f17373] text-green-800'
                           : 'bg-[#e6da89] text-yellow-800'
                       }`}>
-                        {annotation.repairType}
+                        {getRepairType(annotation.RepairReplaceID)}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
-                      ₹{annotation.cost}
+                      ₹{annotation.ActualCostRepair?.toFixed(2) || '0.00'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex justify-end space-x-2">
                         <button
-                          onClick={() => onEdit(annotation)}
+                          onClick={() => onEdit?.(annotation)}
                           className="text-blue-600 hover:text-blue-900"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => onDelete(annotation.id)}
+                          onClick={() => onDelete?.(annotation.MLCaseImageAssessmentId)}
                           className="text-red-600 hover:text-red-900"
                         >
                           <Trash2 className="w-4 h-4" />

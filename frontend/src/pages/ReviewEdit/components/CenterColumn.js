@@ -110,10 +110,10 @@ function CenterColumn() {
 
         {/* Zoomable Image Container */}
         <div 
-          className="h-full w-full relative overflow-hidden"
+          className="h-full w-full relative overflow-auto scrollbar-custom"
         >
           <div
-            className={`absolute inset-0 overflow-auto scrollbar-custom ${!isDrawingMode ? 'cursor-grab active:cursor-grabbing' : ''}`}
+            className={`absolute inset-0 ${!isDrawingMode ? 'cursor-grab active:cursor-grabbing' : ''}`}
             onMouseDown={!isDrawingMode ? handleMouseDown : undefined}
             onMouseMove={!isDrawingMode ? handleMouseMove : undefined}
             onMouseUp={!isDrawingMode ? handleMouseUp : undefined}
